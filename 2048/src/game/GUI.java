@@ -2,10 +2,18 @@ package game;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -87,7 +95,21 @@ public class GUI{
 		gameob.spawnBlock();
 		gameob.spawnBlock();
 	}
-	
+	private static BufferedImage setColor(BufferedImage icon, int r, int g, int b) {
+        WritableRaster raster = icon.getRaster();
+        int width = icon.getWidth();
+        int height = icon.getHeight();
+        for (int xx = 0; xx < width; xx++) {
+            for (int yy = 0; yy < height; yy++) {
+                int[] pixels = raster.getPixel(xx, yy, (int[]) null);
+                pixels[0] = r;
+                pixels[1] = g;
+                pixels[2] = b;
+                raster.setPixel(xx, yy, pixels);
+            }
+        }
+        return icon;
+    } 
 	private void drawGrid(){
 		for (int row = 0; row < Game.SIZE; row++){
 			for (int column = 0; column < Game.SIZE; column++){
@@ -97,12 +119,38 @@ public class GUI{
 				String displayedNumber = value != 0 ? String.valueOf(value) : "";
 				label.setText(displayedNumber);
                                 // Makes background for tiles
-//                                Image image=GenerateImage.toImage(true);
-//                                ImageIcon icon = new ImageIcon(image); 
+                                    
+                                  BufferedImage icon = null;
+                try {
+                    icon = ImageIO.read(new File("src/resources/ibg.png"));
+                } catch (IOException e){
+                    System.err.println(e.getMessage());
+                }
+                if(value == 0){
+                    setColor(icon, 255, 255, 255);
+                }
+                else if(value == 2){
+                    setColor(icon, Color.cyan.getRed(), Color.cyan.getGreen(), Color.cyan.getBlue());
+                }
+
+                Icon tile = new ImageIcon(icon);
+                label.setIcon(tile);
+                int fontSize = getFontsize(value);
+                label.setHorizontalTextPosition(JLabel.CENTER);
+                label.setVerticalTextPosition(JLabel.CENTER);
+                label.setFont(new Font("TimesRoman", Font.PLAIN, fontSize));
                                 
-			        label.setBackground(Color.black);
-				int fontSize = getFontsize(value);
-				label.setFont(new Font("TimesRoman", Font.PLAIN, fontSize));
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                
+
+                                
+			      
                                 
 			}
 		}
@@ -132,28 +180,7 @@ public class GUI{
 			return 40;
 		}
                 
-	}
-		
-//        private Color getFontColor(int number){
-//            switch(number){
-//                case 2:
-//                    return Color.GRAY;
-//                case 4:
-//                   return Color.YELLOW;
-//                   case 8:
-//                    return Color.ORANGE;
-//                case 16:
-//                   return Color.PINK;
-//                   case 32:
-//                    return Color.CYAN;
-//                case 63:
-//                   return Color.RED;
-//                   
-//                  
-//            }
-//           return Color.white;
-//                   
-//        }
+	}   
 	private void update(){
 		drawGrid();
 		frame.repaint();

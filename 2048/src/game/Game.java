@@ -64,7 +64,7 @@ public class Game {
 				rand2 = random.nextInt(SIZE);
 				if (gameGrid.getValue(rand1, rand2) == 0){
 					// there is a 75% percent chance for a two:
-					int number = random.nextInt(5) != 2 ? 4 : 2;
+					int number = random.nextInt(5) != 2 ? 2 : 4;
 					gameGrid.setValue(rand1, rand2, number);
 					break;
 				}
