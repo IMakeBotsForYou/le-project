@@ -97,6 +97,10 @@ public class GUI{
 				int value = gameob.getGridValue(column, row);
 				String displayedNumber = value != 0 ? String.valueOf(value) : "";
 				label.setText(displayedNumber);
+                                // Makes background for tiles
+//                                Image image=GenerateImage.toImage(true);
+//                                ImageIcon icon = new ImageIcon(image); 
+                                
 			        label.setBackground(Color.black);
 				int fontSize = getFontsize(value);
 				label.setFont(new Font("TimesRoman", Font.PLAIN, fontSize));
