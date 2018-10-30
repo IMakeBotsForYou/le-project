@@ -94,6 +94,7 @@ public class GUI{
 				int value = gameob.getGridValue(column, row);
 				String displayedNumber = value != 0 ? String.valueOf(value) : "";
 				label.setText(displayedNumber);
+<<<<<<< HEAD
 				BufferedImage icon = null;
 				try {
 					icon = ImageIO.read(new File("src/resources/tile background.png"));
@@ -114,6 +115,13 @@ public class GUI{
 				}
 				Icon tile = new ImageIcon(icon);
 				label.setIcon(tile);
+=======
+                                // Makes background for tiles
+//                                Image image=GenerateImage.toImage(true);
+//                                ImageIcon icon = new ImageIcon(image); 
+                                
+			        label.setBackground(Color.black);
+>>>>>>> c6cbf798da508ac709eb79c606cf1af4c81074c0
 				int fontSize = getFontsize(value);
 				label.setHorizontalTextPosition(JLabel.CENTER);
 				label.setVerticalTextPosition(JLabel.CENTER);

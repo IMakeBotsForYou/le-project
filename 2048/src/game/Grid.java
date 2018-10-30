@@ -1,7 +1,7 @@
 package game;
 
 import java.util.Arrays;
-import java.awt.Color;
+//import java.awt.Color;
 public class Grid {
 	private int[][] grid;
 	private final int size;
