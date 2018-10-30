@@ -2,18 +2,10 @@ package game;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
-import java.awt.image.WritableRaster;
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -43,8 +35,13 @@ public class GUI{
 		panel.setLayout(new GridLayout(0, 4));
 		initLabels();
 		frame.addKeyListener(new KeyListener(){
+                        @Override
 			public void keyPressed(KeyEvent e) {
 				int key = e.getKeyCode();
+                                
+                                
+                                
+                                
 				if (keyToDirection.containsKey(key) &&
 						gameob.move(keyToDirection.get(key))){
 					
@@ -95,21 +92,7 @@ public class GUI{
 		gameob.spawnBlock();
 		gameob.spawnBlock();
 	}
-	private static BufferedImage setColor(BufferedImage icon, int r, int g, int b) {
-        WritableRaster raster = icon.getRaster();
-        int width = icon.getWidth();
-        int height = icon.getHeight();
-        for (int xx = 0; xx < width; xx++) {
-            for (int yy = 0; yy < height; yy++) {
-                int[] pixels = raster.getPixel(xx, yy, (int[]) null);
-                pixels[0] = r;
-                pixels[1] = g;
-                pixels[2] = b;
-                raster.setPixel(xx, yy, pixels);
-            }
-        }
-        return icon;
-    } 
+        
 	private void drawGrid(){
 		for (int row = 0; row < Game.SIZE; row++){
 			for (int column = 0; column < Game.SIZE; column++){
@@ -118,45 +101,31 @@ public class GUI{
 				int value = gameob.getGridValue(column, row);
 				String displayedNumber = value != 0 ? String.valueOf(value) : "";
 				label.setText(displayedNumber);
-                                // Makes background for tiles
-                                    
-                                  BufferedImage icon = null;
-                try {
-                    icon = ImageIO.read(new File("src/resources/ibg.png"));
-                } catch (IOException e){
-                    System.err.println(e.getMessage());
-                }
-                if(value == 0){
-                    setColor(icon, 255, 255, 255);
-                }
-                else if(value == 2){
-                    setColor(icon, Color.cyan.getRed(), Color.cyan.getGreen(), Color.cyan.getBlue());
-                }
-
-                Icon tile = new ImageIcon(icon);
-                label.setIcon(tile);
-                int fontSize = getFontsize(value);
-                label.setHorizontalTextPosition(JLabel.CENTER);
-                label.setVerticalTextPosition(JLabel.CENTER);
-                label.setFont(new Font("TimesRoman", Font.PLAIN, fontSize));
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                
-
-                                
-			      
-                                
+                                label.setOpaque(true);
+                                if(value == 0) label.setBackground(new Color(255, 255, 255));
+                                if(value == 16) label.setBackground(new Color(252, 178, 0));
+                                if(value == 8) label.setBackground(new Color(242, 197, 89));
+                                if(value == 2) label.setBackground(new Color(249, 243, 229));
+                                if(value == 4) label.setBackground(new Color(252, 240, 212));
+                                if(value == 32) label.setBackground(new Color(232, 117, 99));
+                                if(value == 64) label.setBackground(new Color(237, 75, 49));
+                                if(value == 128) label.setBackground(new Color(253, 255, 140));
+                             
+                               if(value == 256) label.setBackground(new Color(8, 255, 0));
+                               if(value == 512) label.setBackground(new Color(120, 100, 255));
+                               if(value == 1024) label.setBackground(new Color(255, 0, 63));
+                                if(value == 2048) label.setBackground(new Color(42, 0, 255));
+                               
+                               System.out.println(gameob.getGridValue(column, row));
+                               
+				int fontSize = getFontsize(value);
+				label.setHorizontalTextPosition(JLabel.CENTER);
+				label.setVerticalTextPosition(JLabel.CENTER);
+				label.setFont(new Font("TimesRoman", Font.PLAIN, fontSize));
 			}
 		}
 	}
 
-        
         private boolean gameWon(){
             for (int row = 0; row < Game.SIZE; row++) {
                 for (int column = 0; column < Game.SIZE; column++) {
