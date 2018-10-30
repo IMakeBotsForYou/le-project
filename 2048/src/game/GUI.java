@@ -1,16 +1,13 @@
 package game;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.*;
+import java.io.File;
 import java.util.HashMap;
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 public class GUI{
 	
@@ -97,27 +94,62 @@ public class GUI{
 				int value = gameob.getGridValue(column, row);
 				String displayedNumber = value != 0 ? String.valueOf(value) : "";
 				label.setText(displayedNumber);
-			        label.setBackground(Color.black);
+				BufferedImage icon = null;
+				try {
+					icon = ImageIO.read(new File("src/resources/tile background.png"));
+				} catch (Exception e){
+					System.err.println(e.getMessage());
+				}
+				if(value == 0){
+					setColor(icon, 255, 255, 255);
+				}
+				else if(value == 2){
+					setColor(icon, Color.cyan.getRed(), Color.cyan.getGreen(), Color.cyan.getBlue());
+				}
+				else if(value == 8){
+					setColor(icon, 255, 166, 76);
+				}
+				else if(value == 16){
+					setColor(icon, Color.orange.getRed(), Color.orange.getGreen(), Color.orange.getBlue());
+				}
+				Icon tile = new ImageIcon(icon);
+				label.setIcon(tile);
 				int fontSize = getFontsize(value);
+				label.setHorizontalTextPosition(JLabel.CENTER);
+				label.setVerticalTextPosition(JLabel.CENTER);
 				label.setFont(new Font("TimesRoman", Font.PLAIN, fontSize));
-                                
 			}
 		}
 	}
 
-        
-        private boolean gameWon(){
-            for (int row = 0; row < Game.SIZE; row++) {
-                for (int column = 0; column < Game.SIZE; column++) {
-                    int value = gameob.getGridValue(row,column);
-                    if(value >= 2048){
-                        return true;
-                    }
-                }
-            }
-            
-            return false;
-        }
+	private static BufferedImage setColor(BufferedImage icon, int r, int g, int b) {
+		WritableRaster raster = icon.getRaster();
+		int width = icon.getWidth();
+		int height = icon.getHeight();
+		for (int xx = 0; xx < width; xx++) {
+			for (int yy = 0; yy < height; yy++) {
+				int[] pixels = raster.getPixel(xx, yy, (int[]) null);
+				pixels[0] = r;
+				pixels[1] = g;
+				pixels[2] = b;
+				raster.setPixel(xx, yy, pixels);
+			}
+		}
+		return icon;
+	}
+
+	private boolean gameWon(){
+		for (int row = 0; row < Game.SIZE; row++) {
+			for (int column = 0; column < Game.SIZE; column++) {
+				int value = gameob.getGridValue(row,column);
+				if(value >= 2048){
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
         
 	private int getFontsize(int number){
 		// finds fitting font size to display the number
