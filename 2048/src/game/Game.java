@@ -1,11 +1,7 @@
 package game;
 
 
-//import java.awt.Color;
 import java.util.Random;
-//import javax.swing.BorderFactory;
-//import javax.swing.JLabel;
-//import javax.swing.SwingConstants;
 
 public class Game {
 	
