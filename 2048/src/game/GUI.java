@@ -163,27 +163,26 @@ public class GUI{
 		}
                 
 	}
-		
-//        private Color getFontColor(int number){
-//            switch(number){
-//                case 2:
-//                    return Color.GRAY;
-//                case 4:
-//                   return Color.YELLOW;
-//                   case 8:
-//                    return Color.ORANGE;
-//                case 16:
-//                   return Color.PINK;
-//                   case 32:
-//                    return Color.CYAN;
-//                case 63:
-//                   return Color.RED;
-//                   
-//                  
-//            }
-//           return Color.white;
-//                   
-//        }
+	/*
+    private Color getFontColor(int number){
+    	switch(number) {
+			case 2:
+				return Color.GRAY;
+			case 4:
+				return Color.YELLOW;
+			case 8:
+				return Color.ORANGE;
+			case 16:
+				return Color.PINK;
+			case 32:
+				return Color.CYAN;
+			case 63:
+				return Color.RED;
+			default:
+				return Color.white;
+		}
+	}
+	*/
 	private void update(){
 		drawGrid();
 		frame.repaint();
